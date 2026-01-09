@@ -22,7 +22,7 @@ A modern full-stack web application for exploring book data from World of Books 
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/bookdata-hub.git
+git clone git@github.com:vinod8833/product-data-explorer.git
 cd bookdata-hub
 
 # Setup and start everything
