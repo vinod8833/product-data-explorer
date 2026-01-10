@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-import { Mail, MessageSquare, Github, ExternalLink, CheckCircle } from 'lucide-react';
+import { Mail, MessageSquare, Github as GitHubIcon, ExternalLink, CheckCircle } from 'lucide-react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -192,10 +192,10 @@ export default function ContactPage() {
                 For technical support, bug reports, and general inquiries:
               </p>
               <a 
-                href="mailto:support@productexplorer.com" 
+                href="mailto:vinodkr8833@gmail.com" 
                 className="text-blue-600 hover:text-blue-800 font-medium text-lg"
               >
-                support@productexplorer.com
+                vinodkr8833@gmail.com
               </a>
               <p className="text-sm text-gray-500 mt-2">
                 We typically respond within 24 hours during business days.
@@ -206,7 +206,7 @@ export default function ContactPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
-                <Github className="mr-2 h-5 w-5" />
+                <GitHubIcon className="mr-2 h-5 w-5" />
                 Open Source
               </CardTitle>
             </CardHeader>
@@ -215,7 +215,7 @@ export default function ContactPage() {
                 This project is open source. Contribute, report issues, or explore the code:
               </p>
               <a 
-                href="https://github.com/product-explorer" 
+                href="https://github.com/vinod8833/product-data-explorer" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"

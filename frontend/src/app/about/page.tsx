@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
-import { BookOpen, Code, Database, Globe, Shield, Zap, ExternalLink } from 'lucide-react';
+import Button from '@/components/ui/Button';
+import { BookOpen, Code, Database, Globe, Shield, Zap, ExternalLink, MessageCircle } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'About | Product Data Explorer',
@@ -15,10 +17,20 @@ export default function AboutPage() {
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
           About Product Data Explorer
         </h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
           A production-ready web application for exploring product data from World of Books, 
           featuring live on-demand scraping and comprehensive product navigation.
         </p>
+        
+        {/* Contact Button */}
+        <div className="flex justify-center">
+          <Link href="/contact">
+            <Button size="lg" className="shadow-md hover:shadow-lg">
+              <MessageCircle className="h-5 w-5 mr-2" />
+              Contact Us
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <section className="mb-12">
@@ -208,6 +220,22 @@ export default function AboutPage() {
         </Card>
       </section>
 
+      {/* Contact Section */}
+      <section className="text-center bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          Have Questions or Feedback?
+        </h2>
+        <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+          We'd love to hear from you! Whether you have questions about the technology, 
+          suggestions for improvements, or need support, don't hesitate to reach out.
+        </p>
+        <Link href="/contact">
+          <Button size="lg" className="shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <MessageCircle className="h-5 w-5 mr-2" />
+            Get in Touch
+          </Button>
+        </Link>
+      </section>
       
       
     </div>
