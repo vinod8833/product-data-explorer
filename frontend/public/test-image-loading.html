@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Loading Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .image-test { 
+            display: inline-block; 
+            margin: 10px; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            width: 250px;
+            vertical-align: top;
+        }
+        .test-image { 
+            width: 100%; 
+            height: 200px; 
+            object-fit: cover; 
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        .loading { color: orange; }
+    </style>
+</head>
+<body>
+    <h1>Image Loading Test - Products Page</h1>
+    
+    <div class="test-section">
+        <h2>Fetching Products from API</h2>
+        <div id="api-status">Loading...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Testing Image URLs</h2>
+        <div id="image-tests"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test Summary</h2>
+        <div id="summary"></div>
+    </div>
+
+    <script>
+        let products = [];
+        let testResults = [];
+
+        async function fetchProducts() {
+            try {
+                const response = await fetch('/api/products?page=1&limit=10&sortBy=id&sortOrder=DESC');
+                const data = await response.json();
+                products = data.data;
+                
+                document.getElementById('api-status').innerHTML = `
+                    <div class="success">✓ Fetched ${products.length} products</div>
+                    <div>Total available: ${data.total}</div>
+                `;
+                
+                testImages();
+            } catch (error) {
+                document.getElementById('api-status').innerHTML = `
+                    <div class="error">✗ Failed to fetch products: ${error.message}</div>
+                `;
+            }
+        }
+
+        function testImages() {
+            const container = document.getElementById('image-tests');
+            
+            products.forEach((product, index) => {
+                const testDiv = document.createElement('div');
+                testDiv.className = 'image-test';
+                
+                const title = document.createElement('h4');
+                title.textContent = `${product.title} (ID: ${product.id})`;
+                testDiv.appendChild(title);
+                
+                const img = document.createElement('img');
+                img.className = 'test-image';
+                img.alt = product.title;
+                
+                const status = document.createElement('div');
+                status.innerHTML = '<span class="loading">Loading...</span>';
+                
+                const urlInfo = document.createElement('div');
+                urlInfo.innerHTML = `<small class="info">URL: ${product.imageUrl}</small>`;
+                
+                testDiv.appendChild(img);
+                testDiv.appendChild(status);
+                testDiv.appendChild(urlInfo);
+                container.appendChild(testDiv);
+                
+                testImageWithFallbacks(img, status, product, index);
+            });
+        }
+
+        async function testImageWithFallbacks(img, status, product, index) {
+            const startTime = Date.now();
+            let attempts = 0;
+            
+            const urls = [
+                product.imageUrl,
+                `https://covers.openlibrary.org/b/isbn/${product.detail?.isbn?.replace(/[-\\s]/g, '') || 'unknown'}-M.jpg`,
+                `https://dummyimage.com/300x400/4a5568/ffffff&text=Book+${product.id}`,
+                `https://via.placeholder.com/300x400/4a5568/ffffff?text=Book+Cover`,
+                `https://dummyimage.com/300x400/9ca3af/ffffff&text=No+Image`
+            ];
+            
+            function tryNextUrl() {
+                if (attempts >= urls.length) {
+                    const loadTime = Date.now() - startTime;
+                    status.innerHTML = `<span class="error">✗ All URLs failed (${loadTime}ms)</span>`;
+                    testResults.push({ product: product.id, success: false, time: loadTime, attempts });
+                    updateSummary();
+                    return;
+                }
+                
+                const currentUrl = urls[attempts];
+                attempts++;
+                
+                status.innerHTML = `<span class="loading">Trying URL ${attempts}/${urls.length}...</span>`;
+                
+                const testImg = new Image();
+                
+                testImg.onload = () => {
+                    const loadTime = Date.now() - startTime;
+                    img.src = currentUrl;
+                    status.innerHTML = `<span class="success">✓ Loaded (${loadTime}ms, attempt ${attempts})</span>`;
+                    testResults.push({ product: product.id, success: true, time: loadTime, attempts });
+                    updateSummary();
+                };
+                
+                testImg.onerror = () => {
+                    console.log(`Failed to load: ${currentUrl}`);
+                    tryNextUrl();
+                };
+                
+                testImg.crossOrigin = 'anonymous';
+                testImg.referrerPolicy = 'no-referrer';
+                testImg.src = currentUrl;
+            }
+            
+            tryNextUrl();
+        }
+
+        function updateSummary() {
+            const total = testResults.length;
+            const successful = testResults.filter(r => r.success).length;
+            const avgTime = testResults.reduce((sum, r) => sum + r.time, 0) / total;
+            
+            document.getElementById('summary').innerHTML = `
+                <h3>Results: ${successful}/${total} images loaded successfully</h3>
+                <p>Success rate: ${Math.round((successful/total) * 100)}%</p>
+                <p>Average load time: ${Math.round(avgTime)}ms</p>
+                <p>Tests completed: ${total}/${products.length}</p>
+            `;
+        }
+
+        window.addEventListener('load', fetchProducts);
+    </script>
+</body>
+</html>

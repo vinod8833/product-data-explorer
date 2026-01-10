@@ -1,4 +1,4 @@
-.PHONY: help dev stop clean install setup seed test logs status health check-deps
+.PHONY: help dev stop clean install setup seed test logs status health check-deps setup-env start
 
 .DEFAULT_GOAL := help
 
@@ -11,13 +11,13 @@ help:
 	@echo "$(GREEN)Product Data Explorer - Development Commands$(NC)"
 	@echo ""
 	@echo "$(YELLOW)Quick Start:$(NC)"
-	@echo "  make setup    # First time setup (install deps + start services)"
-	@echo "  make dev      # Start the entire development environment"
+	@echo "  make setup && make dev    # Complete setup and start development"
+	@echo "  make start                # One-command setup and start (alias for setup && dev)"      
 	@echo ""
 	@echo "$(YELLOW)Available commands:$(NC)"
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  $(GREEN)%-12s$(NC) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-check-deps: 
+check-deps: ## Check if required dependencies are installed
 	@echo "$(YELLOW)Checking dependencies...$(NC)"
 	@command -v docker >/dev/null 2>&1 || { echo "$(RED)Error: docker is required but not installed$(NC)"; exit 1; }
 	@command -v docker-compose >/dev/null 2>&1 || { echo "$(RED)Error: docker-compose is required but not installed$(NC)"; exit 1; }
@@ -33,7 +33,7 @@ install: check-deps
 	@cd frontend && npm install
 	@echo "$(GREEN)✓ Dependencies installed$(NC)"
 
-services: 
+services: ## Start Docker services (PostgreSQL and Redis)
 	@echo "$(YELLOW)Starting Docker services...$(NC)"
 	@docker-compose up -d postgres redis
 	@echo "$(GREEN)✓ Docker services started$(NC)"
@@ -41,20 +41,73 @@ services:
 wait-services: 
 	@echo "$(YELLOW)Waiting for services to be ready...$(NC)"
 	@echo "Waiting for PostgreSQL..."
-	@timeout 60 bash -c 'until docker-compose exec -T postgres pg_isready -U postgres; do sleep 1; done' || { echo "$(RED)PostgreSQL failed to start$(NC)"; exit 1; }
+	@for i in $$(seq 1 60); do \
+		if docker-compose exec -T postgres pg_isready -U postgres >/dev/null 2>&1; then \
+			echo "$(GREEN)✓ PostgreSQL is ready$(NC)"; \
+			break; \
+		fi; \
+		if [ $$i -eq 60 ]; then \
+			echo "$(RED)PostgreSQL failed to start after 60 seconds$(NC)"; \
+			exit 1; \
+		fi; \
+		sleep 1; \
+	done
 	@echo "Waiting for Redis..."
-	@timeout 30 bash -c 'until docker-compose exec -T redis redis-cli ping | grep -q PONG; do sleep 1; done' || { echo "$(RED)Redis failed to start$(NC)"; exit 1; }
-	@echo "$(GREEN)✓ Services are ready$(NC)"
+	@for i in $$(seq 1 30); do \
+		if docker-compose exec -T redis redis-cli ping 2>/dev/null | grep -q PONG; then \
+			echo "$(GREEN)✓ Redis is ready$(NC)"; \
+			break; \
+		fi; \
+		if [ $$i -eq 30 ]; then \
+			echo "$(RED)Redis failed to start after 30 seconds$(NC)"; \
+			exit 1; \
+		fi; \
+		sleep 1; \
+	done
+	@echo "$(GREEN)✓ All services are ready$(NC)"
 
 seed: 
 	@echo "$(YELLOW)Seeding database...$(NC)"
 	@cd backend && npm run seed
 	@echo "$(GREEN)✓ Database seeded$(NC)"
 
-setup: install services wait-services seed 
+setup-env: ## Create environment files from examples
+	@echo "$(YELLOW)Setting up environment files...$(NC)"
+	@if [ ! -f backend/.env ]; then \
+		cp backend/.env.example backend/.env; \
+		echo "$(GREEN)✓ Created backend/.env from example$(NC)"; \
+	else \
+		echo "$(GREEN)✓ Backend .env already exists$(NC)"; \
+	fi
+	@if [ ! -f frontend/.env.local ]; then \
+		cp frontend/.env.example frontend/.env.local; \
+		echo "$(GREEN)✓ Created frontend/.env.local from example$(NC)"; \
+	else \
+		echo "$(GREEN)✓ Frontend .env.local already exists$(NC)"; \
+	fi
+
+setup: check-deps setup-env install services wait-services seed ## Complete project setup (dependencies, services, database)
 	@echo "$(GREEN)✓ Setup complete! Run 'make dev' to start development$(NC)"
 
-dev: services wait-services 
+dev: ## Start development servers (backend and frontend)
+	@echo "$(GREEN)Starting Product Data Explorer development environment...$(NC)"
+	@echo "$(YELLOW)Ensuring services are running...$(NC)"
+	@docker-compose up -d postgres redis
+	@$(MAKE) wait-services
+	@echo "$(YELLOW)Services will be available at:$(NC)"
+	@echo "  Frontend: http://localhost:3000"
+	@echo "  Backend:  http://localhost:3001"
+	@echo "  API Docs: http://localhost:3001/api"
+	@echo ""
+	@echo "$(YELLOW)Starting backend and frontend...$(NC)"
+	@echo "Press Ctrl+C to stop all services"
+	@trap 'make stop' INT; \
+	(cd backend && npm run start:dev) & \
+	BACKEND_PID=$$!; \
+	sleep 5; \
+	(cd frontend && npm run dev) & \
+	FRONTEND_PID=$$!; \
+	wait $$BACKEND_PID $$FRONTEND_PID 
 	@echo "$(GREEN)Starting Product Data Explorer development environment...$(NC)"
 	@echo "$(YELLOW)Services will be available at:$(NC)"
 	@echo "  Frontend: http://localhost:3000"
@@ -195,3 +248,9 @@ urls:
 	@echo "$(GREEN)Database Connections:$(NC)"
 	@echo "  PostgreSQL:   localhost:5432 (user: postgres, db: product_explorer)"
 	@echo "  Redis:        localhost:6379"
+start: 
+	@echo "$(GREEN) Starting Product Data Explorer from scratch...$(NC)"
+	@$(MAKE) setup
+	@echo ""
+	@echo "$(GREEN) Setup complete! Starting development environment...$(NC)"
+	@$(MAKE) dev

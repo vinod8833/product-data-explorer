@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProductImage Component Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-container { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        .image-container { width: 200px; height: 300px; border: 1px solid #ddd; margin: 10px 0; position: relative; }
+        .status { margin: 10px 0; padding: 10px; border-radius: 4px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .loading { background-color: #fff3cd; color: #856404; }
+    </style>
+</head>
+<body>
+    <h1>ProductImage Component Test</h1>
+    
+    <div class="test-container">
+        <h2>Test 1: Invalid World of Books URL (should fallback to OpenLibrary)</h2>
+        <div class="image-container">
+            <img id="test1" src="https://images.worldofbooks.com/book/book2500.jpg" alt="Test 1" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div id="status1" class="status loading">Loading...</div>
+        <div>Expected: Should fail and show fallback</div>
+    </div>
+    
+    <div class="test-container">
+        <h2>Test 2: OpenLibrary with ISBN 9781400078776</h2>
+        <div class="image-container">
+            <img id="test2" src="https://covers.openlibrary.org/b/isbn/9781400078776-L.jpg" alt="Test 2" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div id="status2" class="status loading">Loading...</div>
+        <div>Expected: Should load from OpenLibrary</div>
+    </div>
+    
+    <div class="test-container">
+        <h2>Test 3: Local placeholder SVG</h2>
+        <div class="image-container">
+            <img id="test3" src="/book-cover-placeholder.svg" alt="Test 3" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div id="status3" class="status loading">Loading...</div>
+        <div>Expected: Should always load</div>
+    </div>
+    
+    <div class="test-container">
+        <h2>Test 4: Next.js Image API Test</h2>
+        <div class="image-container">
+            <img id="test4" src="/_next/image?url=https%3A%2F%2Fcovers.openlibrary.org%2Fb%2Fisbn%2F9781400078776-L.jpg&w=256&q=75" alt="Test 4" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div id="status4" class="status loading">Loading...</div>
+        <div>Expected: Should load through Next.js image optimization</div>
+    </div>
+
+    <script>
+        function setupImageTest(imgId, statusId) {
+            const img = document.getElementById(imgId);
+            const status = document.getElementById(statusId);
+            
+            img.onload = function() {
+                status.className = 'status success';
+                status.textContent = ` Loaded successfully (${img.naturalWidth}x${img.naturalHeight})`;
+                console.log(`${imgId} loaded:`, img.src);
+            };
+            
+            img.onerror = function() {
+                status.className = 'status error';
+                status.textContent = ' Failed to load';
+                console.error(`${imgId} failed:`, img.src);
+            };
+        }
+        
+        setupImageTest('test1', 'status1');
+        setupImageTest('test2', 'status2');
+        setupImageTest('test3', 'status3');
+        setupImageTest('test4', 'status4');
+        
+        console.log('Starting image tests...');
+    </script>
+</body>
+</html>

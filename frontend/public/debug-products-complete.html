@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products API Integration Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .success { color: green; }
+        .error { color: red; }
+        .warning { color: orange; }
+        .product-card { 
+            border: 1px solid #ccc; 
+            margin: 10px; 
+            padding: 10px; 
+            display: inline-block; 
+            width: 200px; 
+            vertical-align: top;
+        }
+        .product-image { 
+            width: 100%; 
+            height: 150px; 
+            object-fit: cover; 
+            background: #f0f0f0;
+        }
+        .debug-info { 
+            font-size: 12px; 
+            color: #666; 
+            margin-top: 5px;
+            background: #f9f9f9;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Products API Integration Debug</h1>
+    
+    <div class="test-section">
+        <h2>1. API Response Structure Test</h2>
+        <div id="api-test"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Data Uniqueness Test</h2>
+        <div id="uniqueness-test"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Image Loading Test</h2>
+        <div id="image-test"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Product Cards Rendering</h2>
+        <div id="products-display"></div>
+    </div>
+
+    <script>
+        async function testAPI() {
+            try {
+                console.log('Testing API endpoint...');
+                const response = await fetch('/api/products?page=1&limit=10&sortBy=id&sortOrder=DESC');
+                const data = await response.json();
+                
+                document.getElementById('api-test').innerHTML = `
+                    <div class="success">✓ API Response: ${response.status}</div>
+                    <div>Total products: ${data.total}</div>
+                    <div>Products in response: ${data.data.length}</div>
+                    <div>Has next page: ${data.hasNext}</div>
+                `;
+                
+                return data;
+            } catch (error) {
+                document.getElementById('api-test').innerHTML = `
+                    <div class="error">✗ API Error: ${error.message}</div>
+                `;
+                return null;
+            }
+        }
+        
+        function testUniqueness(products) {
+            if (!products || !products.data) {
+                document.getElementById('uniqueness-test').innerHTML = `
+                    <div class="error">✗ No products data to test</div>
+                `;
+                return;
+            }
+            
+            const ids = products.data.map(p => p.id);
+            const titles = products.data.map(p => p.title);
+            const sourceIds = products.data.map(p => p.sourceId);
+            const imageUrls = products.data.map(p => p.imageUrl);
+            
+            const uniqueIds = new Set(ids);
+            const uniqueTitles = new Set(titles);
+            const uniqueSourceIds = new Set(sourceIds);
+            const uniqueImageUrls = new Set(imageUrls);
+            
+            document.getElementById('uniqueness-test').innerHTML = `
+                <div class="${uniqueIds.size === ids.length ? 'success' : 'error'}">
+                    IDs: ${uniqueIds.size}/${ids.length} unique ${uniqueIds.size === ids.length ? '✓' : '✗'}
+                </div>
+                <div class="${uniqueTitles.size === titles.length ? 'success' : 'warning'}">
+                    Titles: ${uniqueTitles.size}/${titles.length} unique ${uniqueTitles.size === titles.length ? '✓' : '⚠'}
+                </div>
+                <div class="${uniqueSourceIds.size === sourceIds.length ? 'success' : 'error'}">
+                    Source IDs: ${uniqueSourceIds.size}/${sourceIds.length} unique ${uniqueSourceIds.size === sourceIds.length ? '✓' : '✗'}
+                </div>
+                <div class="${uniqueImageUrls.size === imageUrls.length ? 'success' : 'warning'}">
+                    Image URLs: ${uniqueImageUrls.size}/${imageUrls.length} unique ${uniqueImageUrls.size === imageUrls.length ? '✓' : '⚠'}
+                </div>
+                <div class="debug-info">
+                    <strong>Sample IDs:</strong> ${ids.slice(0, 5).join(', ')}<br>
+                    <strong>Sample Titles:</strong> ${titles.slice(0, 3).join(', ')}<br>
+                    <strong>Sample Source IDs:</strong> ${sourceIds.slice(0, 3).join(', ')}
+                </div>
+            `;
+        }
+        
+        async function testImages(products) {
+            if (!products || !products.data) {
+                document.getElementById('image-test').innerHTML = `
+                    <div class="error">✗ No products data to test images</div>
+                `;
+                return;
+            }
+            
+            const imageTests = products.data.slice(0, 5).map(async (product, index) => {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    const startTime = Date.now();
+                    
+                    img.onload = () => {
+                        const loadTime = Date.now() - startTime;
+                        resolve({
+                            product: product,
+                            success: true,
+                            loadTime: loadTime,
+                            finalUrl: img.src
+                        });
+                    };
+                    
+                    img.onerror = () => {
+                        const loadTime = Date.now() - startTime;
+                        resolve({
+                            product: product,
+                            success: false,
+                            loadTime: loadTime,
+                            error: 'Failed to load'
+                        });
+                    };
+                    
+                    img.crossOrigin = 'anonymous';
+                    img.referrerPolicy = 'no-referrer';
+                    img.src = product.imageUrl;
+                });
+            });
+            
+            const results = await Promise.all(imageTests);
+            const successCount = results.filter(r => r.success).length;
+            
+            document.getElementById('image-test').innerHTML = `
+                <div class="${successCount === results.length ? 'success' : 'warning'}">
+                    Images loaded: ${successCount}/${results.length} ${successCount === results.length ? '✓' : '⚠'}
+                </div>
+                <div class="debug-info">
+                    ${results.map((result, i) => `
+                        <div>
+                            <strong>Product ${result.product.id}:</strong> 
+                            ${result.success ? 
+                                `✓ Loaded in ${result.loadTime}ms` : 
+                                `✗ ${result.error} (${result.loadTime}ms)`
+                            }
+                            <br><small>${result.product.imageUrl.substring(0, 60)}...</small>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        function renderProducts(products) {
+            if (!products || !products.data) {
+                document.getElementById('products-display').innerHTML = `
+                    <div class="error">✗ No products data to render</div>
+                `;
+                return;
+            }
+            
+            const productsHtml = products.data.slice(0, 6).map((product, index) => `
+                <div class="product-card" data-product-id="${product.id}">
+                    <img 
+                        class="product-image" 
+                        src="${product.imageUrl}" 
+                        alt="${product.title}"
+                        crossorigin="anonymous"
+                        referrerpolicy="no-referrer"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                        onload="console.log('Image loaded for product ${product.id}');"
+                    />
+                    <div style="display:none; height:150px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; font-size:12px; color:#666;">
+                        No Image Available
+                    </div>
+                    <h4>${product.title}</h4>
+                    <p>by ${product.author}</p>
+                    <p><strong>${product.currency} ${product.price}</strong></p>
+                    <p class="${product.inStock ? 'success' : 'error'}">
+                        ${product.inStock ? 'In Stock' : 'Out of Stock'}
+                    </p>
+                    <div class="debug-info">
+                        ID: ${product.id}<br>
+                        Source: ${product.sourceId}<br>
+                        Category: ${product.category?.title || 'N/A'}
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('products-display').innerHTML = productsHtml;
+        }
+        
+        async function runAllTests() {
+            console.log('Starting comprehensive product tests...');
+            
+            const products = await testAPI();
+            if (products) {
+                testUniqueness(products);
+                await testImages(products);
+                renderProducts(products);
+            }
+        }
+        
+        window.addEventListener('load', runAllTests);
+    </script>
+</body>
+</html>

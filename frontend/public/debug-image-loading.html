@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Loading Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .image-test { 
+            display: inline-block; 
+            margin: 10px; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            width: 200px;
+        }
+        .test-image { 
+            width: 100%; 
+            height: 150px; 
+            object-fit: cover; 
+            background: #f0f0f0;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Image Loading Debug - John Steinbeck Books</h1>
+    
+    <div class="test-section">
+        <h2>Testing Image URLs from API</h2>
+        <div id="image-tests"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test Results</h2>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const imageUrls = [
+            {
+                id: 1699,
+                title: "Of Mice and Men",
+                url: "https://covers.openlibrary.org/b/isbn/9780140177398-M.jpg"
+            },
+            {
+                id: 1630,
+                title: "The Grapes of Wrath",
+                url: "https://dummyimage.com/300x400/4a5568/ffffff&text=Book+422"
+            },
+            {
+                id: 1612,
+                title: "The Grapes of Wrath",
+                url: "https://covers.openlibrary.org/b/isbn/9780143039433-M.jpg"
+            }
+        ];
+
+        async function testImages() {
+            const container = document.getElementById('image-tests');
+            const results = document.getElementById('results');
+            let successCount = 0;
+            let totalCount = imageUrls.length;
+
+            for (const book of imageUrls) {
+                const testDiv = document.createElement('div');
+                testDiv.className = 'image-test';
+                
+                const title = document.createElement('h4');
+                title.textContent = `${book.title} (ID: ${book.id})`;
+                testDiv.appendChild(title);
+                
+                const img = document.createElement('img');
+                img.className = 'test-image';
+                img.alt = book.title;
+                
+                const status = document.createElement('div');
+                status.textContent = 'Loading...';
+                
+                testDiv.appendChild(img);
+                testDiv.appendChild(status);
+                container.appendChild(testDiv);
+                
+                const startTime = Date.now();
+                
+                img.onload = () => {
+                    const loadTime = Date.now() - startTime;
+                    status.innerHTML = `<span class="success">✓ Loaded in ${loadTime}ms</span>`;
+                    successCount++;
+                    updateResults();
+                };
+                
+                img.onerror = () => {
+                    const loadTime = Date.now() - startTime;
+                    status.innerHTML = `<span class="error">✗ Failed in ${loadTime}ms</span>`;
+                    
+                    const fallbackImg = document.createElement('img');
+                    fallbackImg.className = 'test-image';
+                    fallbackImg.crossOrigin = 'anonymous';
+                    fallbackImg.referrerPolicy = 'no-referrer';
+                    fallbackImg.src = book.url;
+                    
+                    fallbackImg.onload = () => {
+                        status.innerHTML += `<br><span class="success">✓ Fallback loaded</span>`;
+                        successCount++;
+                        updateResults();
+                    };
+                    
+                    fallbackImg.onerror = () => {
+                        status.innerHTML += `<br><span class="error">✗ Fallback also failed</span>`;
+                        updateResults();
+                    };
+                    
+                    testDiv.appendChild(fallbackImg);
+                };
+                
+                img.crossOrigin = 'anonymous';
+                img.referrerPolicy = 'no-referrer';
+                img.src = book.url;
+                
+                const urlInfo = document.createElement('div');
+                urlInfo.innerHTML = `<small class="info">URL: ${book.url.substring(0, 50)}...</small>`;
+                testDiv.appendChild(urlInfo);
+            }
+            
+            function updateResults() {
+                results.innerHTML = `
+                    <h3>Results: ${successCount}/${totalCount} images loaded successfully</h3>
+                    <p>Success rate: ${Math.round((successCount/totalCount) * 100)}%</p>
+                `;
+            }
+        }
+        
+        async function testFetchMethod() {
+            console.log('Testing fetch method for image URLs...');
+            
+            for (const book of imageUrls) {
+                try {
+                    const response = await fetch(book.url, { 
+                        method: 'HEAD',
+                        mode: 'no-cors'
+                    });
+                    console.log(`Fetch test for ${book.title}:`, response.status || 'no-cors success');
+                } catch (error) {
+                    console.log(`Fetch test for ${book.title}:`, 'Failed', error.message);
+                }
+            }
+        }
+        
+        window.addEventListener('load', () => {
+            testImages();
+            testFetchMethod();
+        });
+    </script>
+</body>
+</html>
