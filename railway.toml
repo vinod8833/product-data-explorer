@@ -4,7 +4,7 @@ startCommand = "./start.sh"
 [environments.production]
 variables = { 
   NODE_ENV = "production",
-  DATABASE_URL = "postgresql://postgres:PKzoOzvUtjJgxIzKpOoXALIIAfLuHWls@centerbeam.proxy.rlwy.net:13082/railway",
   PORT = "3001",
-  HOST = "0.0.0.0"
+  HOST = "0.0.0.0",
+  DATABASE_URL = "postgresql://postgres:PKzoOzvUtjJgxIzKpOoXALIIAfLuHWls@centerbeam.proxy.rlwy.net:13082/railway"
 }
