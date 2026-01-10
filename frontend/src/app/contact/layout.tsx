@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   keywords: ['Contact', 'Support', 'Product Data Explorer', 'Technical Support', 'API Help'],
 };
 
+
 export default function ContactLayout({
   children,
 }: {

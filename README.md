@@ -45,7 +45,7 @@ make start
 
 1. **Dependency Check**: Verifies Docker, Node.js, and npm are installed
 2. **Environment Setup**: Creates `.env` files from examples if they don't exist
-3. **Install Dependencies**: Runs `npm install` for both backend and frontend
+3. **Install Dependencies**: Runs `npm install` for both backend  frontend
 4. **Start Services**: Launches PostgreSQL and Redis via Docker Compose
 5. **Wait for Services**: Ensures databases are ready before proceeding
 6. **Seed Database**: Populates initial data and schema

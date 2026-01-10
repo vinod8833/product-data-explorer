@@ -17,7 +17,7 @@ help:
 	@echo "$(YELLOW)Available commands:$(NC)"
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  $(GREEN)%-12s$(NC) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-check-deps: ## Check if required dependencies are installed
+check-deps: 
 	@echo "$(YELLOW)Checking dependencies...$(NC)"
 	@command -v docker >/dev/null 2>&1 || { echo "$(RED)Error: docker is required but not installed$(NC)"; exit 1; }
 	@command -v docker-compose >/dev/null 2>&1 || { echo "$(RED)Error: docker-compose is required but not installed$(NC)"; exit 1; }
@@ -33,7 +33,7 @@ install: check-deps
 	@cd frontend && npm install
 	@echo "$(GREEN)✓ Dependencies installed$(NC)"
 
-services: ## Start Docker services (PostgreSQL and Redis)
+services: 
 	@echo "$(YELLOW)Starting Docker services...$(NC)"
 	@docker-compose up -d postgres redis
 	@echo "$(GREEN)✓ Docker services started$(NC)"
@@ -71,7 +71,7 @@ seed:
 	@cd backend && npm run seed
 	@echo "$(GREEN)✓ Database seeded$(NC)"
 
-setup-env: ## Create environment files from examples
+setup-env: 
 	@echo "$(YELLOW)Setting up environment files...$(NC)"
 	@if [ ! -f backend/.env ]; then \
 		cp backend/.env.example backend/.env; \
@@ -89,7 +89,7 @@ setup-env: ## Create environment files from examples
 setup: check-deps setup-env install services wait-services seed ## Complete project setup (dependencies, services, database)
 	@echo "$(GREEN)✓ Setup complete! Run 'make dev' to start development$(NC)"
 
-dev: ## Start development servers (backend and frontend)
+dev: 
 	@echo "$(GREEN)Starting Product Data Explorer development environment...$(NC)"
 	@echo "$(YELLOW)Ensuring services are running...$(NC)"
 	@docker-compose up -d postgres redis
