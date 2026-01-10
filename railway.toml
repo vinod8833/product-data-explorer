@@ -1,5 +1,5 @@
 [deploy]
-startCommand = "./start.sh"
+startCommand = "npm start"
 
 [environments.production]
 variables = { 

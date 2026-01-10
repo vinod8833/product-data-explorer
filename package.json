@@ -1,0 +1,13 @@
+{
+  "name": "product-explorer-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "scripts": {
+    "build": "cd backend && npm ci",
+    "start": "cd backend && node src/simple-server.js"
+  }
+}
