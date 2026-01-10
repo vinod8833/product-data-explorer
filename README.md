@@ -51,14 +51,14 @@ make start
 6. **Seed Database**: Populates initial data and schema
 7. **Start Development**: Launches both backend and frontend servers
 
-## Development Commands
+## Development 
 
 ```bash
 # Complete setup and development
 make setup && make dev    
 make start               
 
-# Individual commands
+# Individual 
 make setup              
 make dev               
 make stop              
