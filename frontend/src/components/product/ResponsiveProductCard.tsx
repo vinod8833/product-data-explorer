@@ -90,7 +90,7 @@ export default function ResponsiveProductCard({
             <div className="flex flex-col">
               {product.price && (
                 <span className="text-lg font-bold text-green-600">
-                  {formatPrice(product.price, product.currency)}
+                  {formatPrice(typeof product.price === 'string' ? parseFloat(product.price) : product.price, product.currency)}
                 </span>
               )}
               <span className={`text-xs ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>

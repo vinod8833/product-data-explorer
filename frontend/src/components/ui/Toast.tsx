@@ -57,7 +57,7 @@ export function ToastProvider({ children, maxToasts = 5 }: ToastProviderProps) {
       return updated.slice(0, maxToasts);
     });
 
-    if (newToast.duration > 0) {
+    if (newToast.duration && newToast.duration > 0) {
       setTimeout(() => {
         removeToast(id);
       }, newToast.duration);

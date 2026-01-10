@@ -51,9 +51,9 @@ export const swrConfig: SWRConfiguration = {
       });
     }
   },
-  fallback: (key) => {
+  fallback: (key: string) => {
     if (typeof window !== 'undefined') {
-      const cached = getFromStorage(`swr-cache-${key}`, null);
+      const cached = getFromStorage(`swr-cache-${key}`, null) as { data: any; timestamp: number } | null;
       if (cached && Date.now() - cached.timestamp < 300000) { // 5 minutes
         return cached.data;
       }

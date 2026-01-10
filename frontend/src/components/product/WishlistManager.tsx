@@ -56,7 +56,8 @@ export default function WishlistManager({ isOpen, onClose }: WishlistManagerProp
 
     filtered = filtered.filter(item => {
       if (!item.price) return true;
-      return item.price >= priceRange.min && item.price <= priceRange.max;
+      const price = typeof item.price === 'string' ? parseFloat(item.price) : item.price;
+      return price >= priceRange.min && price <= priceRange.max;
     });
 
     filtered.sort((a, b) => {
@@ -76,8 +77,8 @@ export default function WishlistManager({ isOpen, onClose }: WishlistManagerProp
           bValue = b.author?.toLowerCase() || '';
           break;
         case 'price':
-          aValue = a.price || 0;
-          bValue = b.price || 0;
+          aValue = typeof a.price === 'string' ? parseFloat(a.price) || 0 : a.price || 0;
+          bValue = typeof b.price === 'string' ? parseFloat(b.price) || 0 : b.price || 0;
           break;
         case 'priority':
           const priorityOrder = { high: 3, medium: 2, low: 1 };
@@ -143,7 +144,7 @@ export default function WishlistManager({ isOpen, onClose }: WishlistManagerProp
       type: 'product',
       metadata: {
         author: item.author,
-        price: item.price,
+        price: typeof item.price === 'string' ? parseFloat(item.price) : item.price,
         imageUrl: item.imageUrl
       }
     });
@@ -343,7 +344,7 @@ export default function WishlistManager({ isOpen, onClose }: WishlistManagerProp
                         
                         {item.price && (
                           <p className="text-lg font-semibold text-green-600 mb-3">
-                            {formatPrice(item.price, item.currency)}
+                            {formatPrice(typeof item.price === 'string' ? parseFloat(item.price) : item.price, item.currency)}
                           </p>
                         )}
 
@@ -427,7 +428,7 @@ export default function WishlistManager({ isOpen, onClose }: WishlistManagerProp
                             )}
                             {item.price && (
                               <p className="text-lg font-semibold text-green-600">
-                                {formatPrice(item.price, item.currency)}
+                                {formatPrice(typeof item.price === 'string' ? parseFloat(item.price) : item.price, item.currency)}
                               </p>
                             )}
                             {item.notes && (

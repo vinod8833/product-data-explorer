@@ -373,7 +373,7 @@ export default function LiveBooksPage() {
                 
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-lg font-bold text-green-600">
-                    {formatPrice(product.price, product.currency)}
+                    {formatPrice(typeof product.price === 'string' ? parseFloat(product.price) : product.price, product.currency)}
                   </span>
                   <span className={`text-xs px-2 py-1 rounded ${
                     product.inStock 
