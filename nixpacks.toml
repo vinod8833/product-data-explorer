@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ['nodejs_20', 'bash']
+
+[phases.build]
+cmds = ['./build.sh']
+
+[start]
+cmd = './start.sh'
