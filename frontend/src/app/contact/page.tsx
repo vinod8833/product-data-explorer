@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-import { Mail, MessageSquare, Github as GitHubIcon, ExternalLink, CheckCircle } from 'lucide-react';
+import { Mail, MessageSquare, Github, ExternalLink, CheckCircle } from 'lucide-react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -206,7 +206,7 @@ export default function ContactPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
-                <GitHubIcon className="mr-2 h-5 w-5" />
+                <Github className="mr-2 h-5 w-5" />
                 Open Source
               </CardTitle>
             </CardHeader>

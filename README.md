@@ -136,3 +136,39 @@ Features:
 ## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
+
+##  Deployment
+
+### Vercel Deployment (Frontend)
+
+The frontend is configured for automatic deployment to Vercel:
+
+**Live Demo:** [https://your-app.vercel.app](https://your-app.vercel.app) *(Update with your actual URL)*
+
+**Quick Deploy:**
+1. Fork this repository
+2. Connect to [Vercel](https://vercel.com)
+3. Import the project with these settings:
+   - **Root Directory:** `frontend`
+   - **Framework:** Next.js
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `.next`
+
+**Environment Variables for Vercel:**
+```env
+NEXT_PUBLIC_API_URL=https://your-backend-api-url.com/api
+NEXT_PUBLIC_APP_NAME=Product Data Explorer
+NEXT_TELEMETRY_DISABLED=1
+```
+
+**CI/CD:** Every push to `main` automatically deploys to production. Pull requests get preview deployments.
+
+For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
+
+### Backend Deployment
+
+The backend can be deployed to various platforms:
+- **Railway:** Connect GitHub repository, set root directory to `backend`
+- **Heroku:** Use the included `Dockerfile` in the backend directory
+- **DigitalOcean App Platform:** Configure with `backend` as the source directory
+- **AWS/GCP:** Use Docker deployment with the provided `docker-compose.prod.yml`

@@ -13,7 +13,7 @@ export default function APIDebugger({ categoryId, filters, itemsPerPage = 20 }: 
 
   useEffect(() => {
     if (products) {
-      console.log('🔍 API Debug - Products received:', {
+      console.log(' API Debug - Products received:', {
         total: products.total,
         page: products.page,
         dataLength: products.data.length,
@@ -33,7 +33,7 @@ export default function APIDebugger({ categoryId, filters, itemsPerPage = 20 }: 
       const ids = products.data.map(p => p.id);
       const uniqueIds = new Set(ids);
       if (ids.length !== uniqueIds.size) {
-        console.warn('⚠️ Duplicate product IDs found!', {
+        console.warn(' Duplicate product IDs found!', {
           totalProducts: ids.length,
           uniqueIds: uniqueIds.size,
           duplicates: ids.filter((id, index) => ids.indexOf(id) !== index)

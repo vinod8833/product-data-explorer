@@ -14,6 +14,7 @@ const testProducts: Product[] = [
     price: 19.99,
     currency: 'USD',
     imageUrl: 'https://via.placeholder.com/300x400',
+    sourceUrl: 'https://example.com/test-book-1',
     inStock: true,
     sourceId: 'test-1',
     createdAt: new Date().toISOString(),
@@ -26,6 +27,7 @@ const testProducts: Product[] = [
     price: 24.99,
     currency: 'USD',
     imageUrl: 'https://via.placeholder.com/300x400',
+    sourceUrl: 'https://example.com/test-book-2',
     inStock: true,
     sourceId: 'test-2',
     createdAt: new Date().toISOString(),
@@ -95,7 +97,7 @@ export default function TestWishlistPage() {
                   <Button
                     onClick={() => handleAdd(product)}
                     disabled={inWishlist}
-                    variant="default"
+                    variant="primary"
                     size="sm"
                   >
                     Add to Wishlist

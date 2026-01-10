@@ -10,7 +10,7 @@ import { Product } from '@/lib/types';
 
 interface ConditionalDebugComponentsProps {
   products: Product[];
-  categoryId?: string;
+  categoryId?: string | number;
   filters?: any;
   itemsPerPage?: number;
 }
@@ -36,7 +36,11 @@ export default function ConditionalDebugComponents({
   return (
     <>
       <APITester />
-      <APIDebugger categoryId={categoryId} filters={filters} itemsPerPage={itemsPerPage} />
+      <APIDebugger 
+        categoryId={typeof categoryId === 'string' ? parseInt(categoryId) : categoryId} 
+        filters={filters} 
+        itemsPerPage={itemsPerPage} 
+      />
       <ProductListDebug products={products} />
       <ImageTester products={products.slice(0, 5)} />
       <ImageDebugger products={products} />

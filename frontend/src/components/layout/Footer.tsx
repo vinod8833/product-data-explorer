@@ -57,7 +57,7 @@ export default function Footer() {
               </li>
               <li>
                 <a 
-                  href="https://github.com" 
+                  href="https://github.com/vinod8833/product-data-explorer" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition-colors"
@@ -67,7 +67,7 @@ export default function Footer() {
               </li>
               <li>
                 <a 
-                  href="https://github.com" 
+                  href="http://localhost:3000/live-books" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition-colors"
