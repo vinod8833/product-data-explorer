@@ -10,7 +10,7 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap');
   
   try {
-    logger.log('🚀 Starting Product Explorer Backend (Production Mode)');
+    logger.log('Starting Product Explorer Backend (Production Mode)');
     
     const app = await NestFactory.create(AppProductionModule, {
       logger: ['error', 'warn', 'log'],
@@ -115,13 +115,13 @@ async function bootstrap() {
     
     await app.listen(port, host);
 
-    logger.log(`✅ Application is running on: http://${host}:${port}`);
-    logger.log(`📚 API Documentation: http://${host}:${port}/api/docs`);
-    logger.log(`💚 Health Check: http://${host}:${port}/health`);
-    logger.log(`🌍 Environment: ${configService.get('NODE_ENV')}`);
+    logger.log(`Application is running on: http://${host}:${port}`);
+    logger.log(`API Documentation: http://${host}:${port}/api/docs`);
+    logger.log(`Health Check: http://${host}:${port}/health`);
+    logger.log(`Environment: ${configService.get('NODE_ENV')}`);
     
   } catch (error) {
-    logger.error('❌ Failed to start application:', error);
+    logger.error(' Failed to start application:', error);
     process.exit(1);
   }
 }

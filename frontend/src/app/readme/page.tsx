@@ -1,27 +1,21 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
 import { 
   BookOpen, 
   Code, 
   Database, 
-  Globe, 
-  Shield, 
-  Zap, 
   ExternalLink, 
   Github, 
   Users, 
-  Star, 
   Heart, 
-  Cpu, 
   Cloud,
   Terminal,
   Play,
   Settings,
   CheckCircle,
   ArrowRight,
-  Download
+  Shield
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -106,11 +100,14 @@ export default function ReadmePage() {
               <p className="text-sm text-gray-600 mb-3">
                 JavaScript runtime environment
               </p>
-              <Button variant="outline" size="sm" asChild>
-                <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">
-                  Download
-                </a>
-              </Button>
+              <a 
+                href="https://nodejs.org/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-8 px-3 text-sm gap-1.5"
+              >
+                Download
+              </a>
             </CardContent>
           </Card>
 
@@ -123,11 +120,14 @@ export default function ReadmePage() {
               <p className="text-sm text-gray-600 mb-3">
                 Container platform for services
               </p>
-              <Button variant="outline" size="sm" asChild>
-                <a href="https://www.docker.com/get-started" target="_blank" rel="noopener noreferrer">
-                  Download
-                </a>
-              </Button>
+              <a 
+                href="https://www.docker.com/get-started" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-8 px-3 text-sm gap-1.5"
+              >
+                Download
+              </a>
             </CardContent>
           </Card>
 
@@ -140,11 +140,14 @@ export default function ReadmePage() {
               <p className="text-sm text-gray-600 mb-3">
                 Version control system
               </p>
-              <Button variant="outline" size="sm" asChild>
-                <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">
-                  Download
-                </a>
-              </Button>
+              <a 
+                href="https://git-scm.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-8 px-3 text-sm gap-1.5"
+              >
+                Download
+              </a>
             </CardContent>
           </Card>
 
@@ -410,12 +413,13 @@ export default function ReadmePage() {
                 
                 <div>
                   <h5 className="font-semibold text-gray-900">Need more help?</h5>
-                  <Button variant="outline" size="sm" asChild className="mt-2">
-                    <Link href="/contact">
-                      <Users className="mr-1 h-3 w-3" />
-                      Contact Support
-                    </Link>
-                  </Button>
+                  <Link 
+                    href="/contact"
+                    className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-8 px-3 text-sm gap-1.5 mt-2"
+                  >
+                    <Users className="mr-1 h-3 w-3" />
+                    Contact Support
+                  </Link>
                 </div>
               </div>
             </CardContent>
@@ -435,33 +439,39 @@ export default function ReadmePage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <Button asChild className="h-auto p-4 flex-col">
-                <Link href="/products">
-                  <BookOpen className="h-6 w-6 mb-2" />
-                  <span>Explore Products</span>
-                </Link>
-              </Button>
+              <Link 
+                href="/products"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md focus-visible:ring-blue-500 active:bg-blue-800 h-auto p-4 flex-col gap-2"
+              >
+                <BookOpen className="h-6 w-6 mb-2" />
+                <span>Explore Products</span>
+              </Link>
               
-              <Button variant="outline" asChild className="h-auto p-4 flex-col">
-                <a href="http://localhost:3001/api/docs" target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-6 w-6 mb-2" />
-                  <span>API Docs</span>
-                </a>
-              </Button>
+              <a 
+                href="http://localhost:3001/api/docs" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-auto p-4 flex-col gap-2"
+              >
+                <ExternalLink className="h-6 w-6 mb-2" />
+                <span>API Docs</span>
+              </a>
               
-              <Button variant="outline" asChild className="h-auto p-4 flex-col">
-                <Link href="/about">
-                  <Users className="h-6 w-6 mb-2" />
-                  <span>Learn More</span>
-                </Link>
-              </Button>
+              <Link 
+                href="/about"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-auto p-4 flex-col gap-2"
+              >
+                <Users className="h-6 w-6 mb-2" />
+                <span>Learn More</span>
+              </Link>
               
-              <Button variant="outline" asChild className="h-auto p-4 flex-col">
-                <Link href="/contact">
-                  <Heart className="h-6 w-6 mb-2" />
-                  <span>Get Support</span>
-                </Link>
-              </Button>
+              <Link 
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-auto p-4 flex-col gap-2"
+              >
+                <Heart className="h-6 w-6 mb-2" />
+                <span>Get Support</span>
+              </Link>
             </div>
           </CardContent>
         </Card>

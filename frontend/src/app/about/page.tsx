@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
 import { BookOpen, Code, Database, Globe, Shield, Zap, ExternalLink, Github, Users, Star, Heart, Cpu, Cloud } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -24,22 +23,22 @@ export default function AboutPage() {
           accessible user interface built with cutting-edge technologies.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-          <Button asChild>
-            <Link href="/products">
-              <BookOpen className="mr-2 h-4 w-4" />
-              Explore Products
-            </Link>
-          </Button>
-          <Button variant="outline" asChild>
-            <a 
-              href="http://localhost:3001/api/docs" 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              <ExternalLink className="mr-2 h-4 w-4" />
-              API Documentation
-            </a>
-          </Button>
+          <Link 
+            href="/products"
+            className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md focus-visible:ring-blue-500 active:bg-blue-800 h-10 px-4 py-2 gap-2"
+          >
+            <BookOpen className="mr-2 h-4 w-4" />
+            Explore Products
+          </Link>
+          <a 
+            href="http://localhost:3001/api/docs" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-10 px-4 py-2 gap-2"
+          >
+            <ExternalLink className="mr-2 h-4 w-4" />
+            API Documentation
+          </a>
         </div>
       </div>
 
@@ -343,22 +342,22 @@ export default function AboutPage() {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild>
-                  <a 
-                    href="http://localhost:3001/api/docs" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    <ExternalLink className="mr-2 h-4 w-4" />
-                    Open Swagger Documentation
-                  </a>
-                </Button>
-                <Button variant="outline" asChild>
-                  <Link href="/contact">
-                    <Users className="mr-2 h-4 w-4" />
-                    Contact for API Access
-                  </Link>
-                </Button>
+                <a 
+                  href="http://localhost:3001/api/docs" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md focus-visible:ring-blue-500 active:bg-blue-800 h-10 px-4 py-2 gap-2"
+                >
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  Open Swagger Documentation
+                </a>
+                <Link 
+                  href="/contact"
+                  className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-10 px-4 py-2 gap-2"
+                >
+                  <Users className="mr-2 h-4 w-4" />
+                  Contact for API Access
+                </Link>
               </div>
               
               <div className="text-sm text-gray-600 bg-yellow-50 p-4 rounded-lg border border-yellow-200">
@@ -386,22 +385,22 @@ export default function AboutPage() {
               feature requests, and feedback from developers around the world.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild>
-                <a 
-                  href="https://github.com/vinod8833/product-data-explorer" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
-                  <Github className="mr-2 h-4 w-4" />
-                  View on GitHub
-                </a>
-              </Button>
-              <Button variant="outline" asChild>
-                <Link href="/contact">
-                  <Users className="mr-2 h-4 w-4" />
-                  Get Involved
-                </Link>
-              </Button>
+              <a 
+                href="https://github.com/vinod8833/product-data-explorer" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md focus-visible:ring-blue-500 active:bg-blue-800 h-10 px-4 py-2 gap-2"
+              >
+                <Github className="mr-2 h-4 w-4" />
+                View on GitHub
+              </a>
+              <Link 
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-10 px-4 py-2 gap-2"
+              >
+                <Users className="mr-2 h-4 w-4" />
+                Get Involved
+              </Link>
             </div>
           </CardContent>
         </Card>

@@ -129,7 +129,7 @@ Swagger UI is available locally at:
 
 ---
 
-### Backend (Railway/Heroku)
+### Backend (Railway)
 The backend can be deployed to various platforms with the included configuration files.
 
 ## License
