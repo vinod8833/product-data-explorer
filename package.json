@@ -1,13 +1,11 @@
 {
-  "name": "product-explorer-monorepo",
+  "name": "product-explorer-railway",
   "version": "1.0.0",
-  "private": true,
+  "main": "index.js",
   "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=8.0.0"
+    "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "cd backend && npm ci && npm run build",
-    "start": "cd backend && npm run start:prod"
+    "start": "node index.js"
   }
 }

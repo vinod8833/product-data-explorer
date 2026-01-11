@@ -1,8 +1,7 @@
 [deploy]
-startCommand = "cd backend && npm run start:prod"
+startCommand = "node index.js"
 
 [environments.production]
 variables = { 
-  NODE_ENV = "production",
-  DATABASE_URL = "postgresql://postgres:PKzoOzvUtjJgxIzKpOoXALIIAfLuHWls@centerbeam.proxy.rlwy.net:13082/railway"
+  NODE_ENV = "production"
 }
