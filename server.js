@@ -3,7 +3,7 @@ const http = require('http');
 const port = process.env.PORT || 3000;
 const host = '0.0.0.0';
 
-console.log('🚀 Minimal Railway Server Starting...');
+console.log(' Minimal Railway Server Starting...');
 console.log('Port:', port);
 console.log('Host:', host);
 console.log('NODE_ENV:', process.env.NODE_ENV);
@@ -37,14 +37,14 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(port, host, () => {
-  console.log(`✅ Server running at http://${host}:${port}`);
+  console.log(` Server running at http://${host}:${port}`);
 });
 
 server.on('error', (err) => {
-  console.error('❌ Server error:', err);
+  console.error(' Server error:', err);
 });
 
 process.on('SIGTERM', () => {
-  console.log('📴 Shutting down...');
+  console.log(' Shutting down...');
   server.close(() => process.exit(0));
 });

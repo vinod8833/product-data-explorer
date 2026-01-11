@@ -20,20 +20,20 @@ done
 
 cd backend
 
-echo "📋 Environment:"
+echo "Environment:"
 echo "NODE_ENV: $NODE_ENV"
 echo "PORT: $PORT"
 echo "HOST: $HOST"
 
 # Try different ways to start node
 if command -v node >/dev/null 2>&1; then
-    echo "🎯 Starting with 'node' command..."
+    echo "Starting with 'node' command..."
     exec node src/simple-server.js
 elif [ -n "$NODE_PATH" ]; then
-    echo "🎯 Starting with explicit path: $NODE_PATH"
+    echo "Starting with explicit path: $NODE_PATH"
     exec "$NODE_PATH" src/simple-server.js
 else
-    echo "❌ Node.js not found anywhere!"
+    echo "Node.js not found anywhere!"
     echo "Available commands:"
     ls -la /usr/bin/ | grep -i node || echo "No node in /usr/bin/"
     ls -la /nix/var/nix/profiles/default/bin/ | grep -i node || echo "No node in nix profiles"
