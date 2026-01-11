@@ -61,6 +61,7 @@ function startSimpleServer() {
   const server = http.createServer((req, res) => {
     console.log(`${new Date().toISOString()} ${req.method} ${req.url}`);
     
+    // Set headers early
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -73,6 +74,7 @@ function startSimpleServer() {
     }
     
     let response;
+    let statusCode = 200;
     
     if (req.url === '/health') {
       response = {
@@ -112,22 +114,30 @@ function startSimpleServer() {
           'GET / - Root endpoint'
         ]
       };
-    } else if (req.url === '/') {
-      response = {
-        message: 'Product Data Explorer API',
-        version: '1.0.0',
-        timestamp: new Date().toISOString(),
-        status: 'Railway deployment successful',
-        mode: useFullBackend ? 'full' : 'simple',
-        endpoints: {
-          health: '/health',
-          api: '/api',
-          docs: '/api/docs'
-        },
-        github: 'https://github.com/vinod8833/product-data-explorer'
-      };
+    } else if (req.url === '/' || req.url === '/favicon.ico') {
+      // Handle favicon.ico requests gracefully
+      if (req.url === '/favicon.ico') {
+        response = {
+          message: 'No favicon available',
+          note: 'This is an API server'
+        };
+      } else {
+        response = {
+          message: 'Product Data Explorer API',
+          version: '1.0.0',
+          timestamp: new Date().toISOString(),
+          status: 'Railway deployment successful',
+          mode: useFullBackend ? 'full' : 'simple',
+          endpoints: {
+            health: '/health',
+            api: '/api',
+            docs: '/api/docs'
+          },
+          github: 'https://github.com/vinod8833/product-data-explorer'
+        };
+      }
     } else {
-      res.writeHead(404);
+      statusCode = 404;
       response = {
         error: 'Not Found',
         message: `Endpoint ${req.url} not found`,
@@ -136,7 +146,8 @@ function startSimpleServer() {
       };
     }
     
-    res.writeHead(res.statusCode || 200);
+    // Only call writeHead once
+    res.writeHead(statusCode);
     res.end(JSON.stringify(response, null, 2));
   });
 
