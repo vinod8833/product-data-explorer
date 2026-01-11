@@ -110,7 +110,25 @@ async function bootstrap() {
       });
     });
 
-    const port = configService.get('PORT', 3001);
+    // Root endpoint
+    app.use('/', (req: any, res: any, next: any) => {
+      if (req.url === '/') {
+        res.status(200).json({
+          message: 'Product Data Explorer API',
+          version: '1.0.0',
+          timestamp: new Date().toISOString(),
+          endpoints: {
+            health: '/health',
+            api: '/api',
+            docs: '/api/docs'
+          }
+        });
+      } else {
+        next();
+      }
+    });
+
+    const port = configService.get('PORT') || process.env.PORT || 3001;
     const host = configService.get('HOST', '0.0.0.0');
     
     await app.listen(port, host);
@@ -119,7 +137,17 @@ async function bootstrap() {
     logger.log(`API Documentation: http://${host}:${port}/api/docs`);
     logger.log(`Health Check: http://${host}:${port}/health`);
     logger.log(`Environment: ${configService.get('NODE_ENV')}`);
+    logger.log(`Database URL: ${configService.get('DATABASE_URL') ? 'Connected' : 'Not configured'}`);
     
+    // Log all environment variables for debugging (remove in production)
+    if (configService.get('NODE_ENV') !== 'production') {
+      logger.log('Environment variables:', {
+        PORT: process.env.PORT,
+        HOST: process.env.HOST,
+        NODE_ENV: process.env.NODE_ENV,
+        DATABASE_URL: process.env.DATABASE_URL ? 'Set' : 'Not set'
+      });
+    }
   } catch (error) {
     logger.error(' Failed to start application:', error);
     process.exit(1);
