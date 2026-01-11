@@ -1,8 +1,15 @@
+[build]
+builder = "nixpacks"
+
 [deploy]
-startCommand = "node index.js"
+startCommand = "npm start"
 
 [environments.production]
 variables = { 
   NODE_ENV = "production",
-  DATABASE_URL = "postgresql://postgres:PKzoOzvUtjJgxIzKpOoXALIIAfLuHWls@centerbeam.proxy.rlwy.net:13082/railway"
+  DATABASE_URL = "postgresql://postgres:PKzoOzvUtjJgxIzKpOoXALIIAfLuHWls@centerbeam.proxy.rlwy.net:13082/railway",
+  NEXT_PUBLIC_API_URL = "https://your-backend-api-url.com/api",
+  NEXT_PUBLIC_APP_NAME = "Product Data Explorer",
+  NEXT_PUBLIC_APP_DESCRIPTION = "Explore products from World of Books with live scraping",
+  NEXT_TELEMETRY_DISABLED = "1"
 }

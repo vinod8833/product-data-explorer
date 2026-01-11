@@ -1,11 +1,14 @@
 {
-  "name": "product-explorer-railway",
+  "name": "product-explorer-nextjs",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
   "scripts": {
-    "start": "node index.js"
+    "build": "cd frontend && npm ci && npm run build",
+    "start": "cd frontend && npm start",
+    "dev": "cd frontend && npm run dev"
   }
 }

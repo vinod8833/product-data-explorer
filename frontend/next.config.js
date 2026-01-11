@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Remove 'standalone' output for Vercel deployment
-  // output: 'standalone', // Only needed for Docker deployments
+  // Enable standalone output for Railway deployment
+  output: 'standalone',
   
   images: {
     remotePatterns: [
@@ -64,6 +64,11 @@ const nextConfig = {
   
   experimental: {
     optimizePackageImports: ['lucide-react'],
+  },
+
+  // Railway-specific configuration
+  env: {
+    DATABASE_URL: process.env.DATABASE_URL,
   },
 };
 
