@@ -11,7 +11,6 @@ import { useProducts } from '@/lib/hooks/useApi';
 import { ProductCardSkeleton } from '@/components/ui/LoadingSkeleton';
 import { useRouter } from 'next/navigation';
 import { useSuccessToast } from '@/components/ui/Toast';
-import WishlistTester from '@/components/debug/WishlistTester';
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -74,13 +73,6 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          {/* Debug: Wishlist Tester */}
-          {process.env.NODE_ENV === 'development' && (
-            <div className="mb-8">
-              <WishlistTester />
-            </div>
-          )}
-          
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               Discover Your Next

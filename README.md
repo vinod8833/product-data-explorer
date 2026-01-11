@@ -1,174 +1,137 @@
 # BookData Hub
 
-A modern full-stack web application for exploring book data from World of Books with real-time scraping capabilities. Built with Next.js, NestJS, and TypeScript.
+BookData Hub is a full-stack book data exploration platform built with **Next.js**, **NestJS**, and **TypeScript**. It supports background scraping, caching, and a fully documented API, with a strong focus on production parity and developer experience.
 
-##  Quick Start
 
-**Get up and running in one command:**
+## Quick Start
+
+Run the entire project locally with a single command:
 
 ```bash
-# Clone the repository
 git clone git@github.com:vinod8833/product-data-explorer.git
 cd bookdata-hub
-
-# Complete setup and start development (single command)
 make setup && make dev
 ```
 
-**Alternative one-liner:**
+This command installs dependencies, starts PostgreSQL and Redis, runs migrations and seeds, builds the backend, and launches both frontend and backend services.
+
+---
+
+## Local URLs
+
+* Frontend: [http://localhost:3000](http://localhost:3000)
+* Backend API: [http://localhost:3001/api](http://localhost:3001/api)
+* Swagger API Docs: [http://localhost:3001/api/docs](http://localhost:3001/api/docs)
+* Health Check: [http://localhost:3001/health](http://localhost:3001/health)
+
+---
+
+## Requirements
+
+* Node.js 18+
+* Docker & Docker Compose
+* Git
+* Make
+
+---
+
+## Make Commands
+
+### Setup and Run
+
 ```bash
-make start  
+make setup        # Install dependencies, create env files, start DB/Redis
+make dev          # Start frontend and backend in development mode
+make start        # Alias for: make setup && make dev
 ```
 
-**Access the application:**
--  Frontend: http://localhost:3000
--  Backend API: http://localhost:3001/api
--  API Documentation: http://localhost:3001/api/docs
+### Stop and Clean
+
+```bash
+make stop         # Stop all running services
+make clean        # Remove containers, volumes, and node_modules
+```
+
+### Status and Health
+
+```bash
+make status       # Show status of all services
+make health       # Run health checks
+make urls         # Print all local service URLs
+```
+
+### Docker Services
+
+```bash
+make services     # Start PostgreSQL and Redis only
+make logs         # Show all Docker logs
+make logs-db      # PostgreSQL logs
+make logs-redis   # Redis logs
+```
+
+### Database
+
+```bash
+make migrate      # Run database migrations
+make seed         # Seed initial data
+make db-reset     # Drop, recreate, migrate, and seed database
+make db-shell     # Open PostgreSQL shell
+```
+
+### Tests and Code Quality
+
+```bash
+make test         
+make test-backend   # Run backend tests
+make test-frontend  # Run frontend tests
+make lint           # Lint all code
+make format         # Format all code
+```
+
+### Individual Services
+
+```bash
+make dev-backend  
+make dev-frontend 
+```
+
+### Help
+
+```bash
+make help         
+```
+
+---
 
 ## Key Features
 
-- **Live Book Scraping**: Real-time data from World of Books
-- **Advanced Search**: Filter by price, author, rating, availability
-- **Responsive Design**: Mobile-first with accessibility support
-- **Interactive API**: Complete Swagger documentation
-- **Background Processing**: Queue-based scraping with caching
-- **TypeScript**: Full type safety across the stack
+* Background scraping with queue-based workers
+* PostgreSQL and Redis caching
+* Fully typed API with Swagger documentation
+* Responsive, accessible frontend
+* One-command local setup via Makefile
+* Production-ready architecture
 
-## Prerequisites
-
-- Node.js 18+ 
-- Docker & Docker Compose
-- Git
-- Make (pre-installed on macOS/Linux, install via Chocolatey on Windows)
-
-## What `make setup && make dev` Does
-
-1. **Dependency Check**: Verifies Docker, Node.js, and npm are installed
-2. **Environment Setup**: Creates `.env` files from examples if they don't exist
-3. **Install Dependencies**: Runs `npm install` for both backend  frontend
-4. **Start Services**: Launches PostgreSQL and Redis via Docker Compose
-5. **Wait for Services**: Ensures databases are ready before proceeding
-6. **Seed Database**: Populates initial data and schema
-7. **Start Development**: Launches both backend and frontend servers
-
-## Development 
-
-```bash
-# Complete setup and development
-make setup && make dev    
-make start               
-
-# Individual 
-make setup              
-make dev               
-make stop              
-make status            
-make health            
-
-# Utilities
-make clean             
-make logs              
-make help              
-```
-
-## Environment Variables
-
-The setup process automatically creates environment files from examples. You can customize them if needed:
-
-### Backend (.env)
-```env
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/product_explorer
-DB_HOST=localhost
-DB_PORT=5432
-DB_USERNAME=postgres
-DB_PASSWORD=postgres
-DB_NAME=product_explorer
-
-REDIS_URL=redis://localhost:6379
-
-NODE_ENV=development
-PORT=3001
-CORS_ORIGIN=http://localhost:3000
-```
-
-### Frontend (.env.local)
-```env
-NEXT_PUBLIC_API_URL=http://localhost:3001/api
-NEXT_PUBLIC_APP_NAME=BookData Hub
-```
-
-## Troubleshooting
-
-### Common Issues
-
-**Docker services not starting:**
-```bash
-make stop && make clean  
-make setup              
-```
-
-**Port conflicts:**
-- Frontend (3000), Backend (3001), PostgreSQL (5432), Redis (6379)
-- Stop conflicting services or change ports in docker-compose.yml
-
-**Database connection issues:**
-```bash
-make health            
-make logs-db          
-```
-
-**Permission issues:**
-```bash
-sudo chown -R $USER:$USER .  
-```
+---
 
 ## API Documentation
 
-Interactive API documentation is available at:
-**http://localhost:3001/api/docs** (when running locally)
+Swagger UI is available locally at:
 
-Features:
-- Complete endpoint reference
-- Interactive testing interface
-- Request/response schemas
-- Authentication details
+[http://localhost:3001/api/docs](http://localhost:3001/api/docs)
+
+---
+
+## Deployment
+
+* Frontend: Vercel
+* Backend: Railway or Docker-based platforms
+
+---
+
+### Backend (Railway/Heroku)
+The backend can be deployed to various platforms with the included configuration files.
 
 ## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
-
-##  Deployment
-
-### Vercel Deployment (Frontend)
-
-The frontend is configured for automatic deployment to Vercel:
-
-**Live Demo:** [https://your-app.vercel.app](https://your-app.vercel.app) *(Update with your actual URL)*
-
-**Quick Deploy:**
-1. Fork this repository
-2. Connect to [Vercel](https://vercel.com)
-3. Import the project with these settings:
-   - **Root Directory:** `frontend`
-   - **Framework:** Next.js
-   - **Build Command:** `npm run build`
-   - **Output Directory:** `.next`
-
-**Environment Variables for Vercel:**
-```env
-NEXT_PUBLIC_API_URL=https://your-backend-api-url.com/api
-NEXT_PUBLIC_APP_NAME=Product Data Explorer
-NEXT_TELEMETRY_DISABLED=1
-```
-
-**CI/CD:** Every push to `main` automatically deploys to production. Pull requests get preview deployments.
-
-For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
-
-### Backend Deployment
-
-The backend can be deployed to various platforms:
-- **Railway:** Connect GitHub repository, set root directory to `backend`
-- **Heroku:** Use the included `Dockerfile` in the backend directory
-- **DigitalOcean App Platform:** Configure with `backend` as the source directory
-- **AWS/GCP:** Use Docker deployment with the provided `docker-compose.prod.yml`

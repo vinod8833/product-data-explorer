@@ -103,6 +103,18 @@ export default function Header() {
                 >
                   About
                 </Link>
+                <Link
+                  href="/readme"
+                  className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  README
+                </Link>
+                <Link
+                  href="/contact"
+                  className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Contact
+                </Link>
               </nav>
             </div>
 
@@ -184,6 +196,20 @@ export default function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 About
+              </Link>
+              <Link
+                href="/readme"
+                className="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                README
+              </Link>
+              <Link
+                href="/contact"
+                className="text-gray-700 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
               </Link>
             </div>
           </div>
