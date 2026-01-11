@@ -88,13 +88,12 @@ export default function ContactPage() {
               >
                 Send Another Message
               </Button>
-              <Button 
-                variant="outline" 
-                asChild
-                className="px-8"
+              <Link 
+                href="/"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-10 px-8 py-2 gap-2"
               >
-                <Link href="/">Return to Home</Link>
-              </Button>
+                Return to Home
+              </Link>
             </div>
           </CardContent>
         </Card>
@@ -277,30 +276,31 @@ export default function ContactPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <Button variant="outline" asChild className="w-full justify-start">
-                <a 
-                  href="http://localhost:3001/api/docs" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLink className="mr-2 h-4 w-4" />
-                  API Documentation
-                </a>
-              </Button>
+              <a 
+                href="http://localhost:3001/api/docs" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-10 px-4 py-2 gap-2 w-full justify-start"
+              >
+                <ExternalLink className="mr-2 h-4 w-4" />
+                API Documentation
+              </a>
               
-              <Button variant="outline" asChild className="w-full justify-start">
-                <Link href="/about">
-                  <Users className="mr-2 h-4 w-4" />
-                  About the Project
-                </Link>
-              </Button>
+              <Link 
+                href="/about"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-10 px-4 py-2 gap-2 w-full justify-start"
+              >
+                <Users className="mr-2 h-4 w-4" />
+                About the Project
+              </Link>
               
-              <Button variant="outline" asChild className="w-full justify-start">
-                <Link href="/readme">
-                  <HelpCircle className="mr-2 h-4 w-4" />
-                  Setup Guide
-                </Link>
-              </Button>
+              <Link 
+                href="/readme"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] border-2 border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 active:bg-gray-100 h-10 px-4 py-2 gap-2 w-full justify-start"
+              >
+                <HelpCircle className="mr-2 h-4 w-4" />
+                Setup Guide
+              </Link>
             </CardContent>
           </Card>
 
@@ -316,16 +316,15 @@ export default function ContactPage() {
               <p className="text-gray-600 mb-4 text-sm">
                 This project is open source. Contribute, report issues, or explore the code:
               </p>
-              <Button asChild className="w-full">
-                <a 
-                  href="https://github.com/vinod8833/product-data-explorer" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Github className="mr-2 h-4 w-4" />
-                  View on GitHub
-                </a>
-              </Button>
+              <a 
+                href="https://github.com/vinod8833/product-data-explorer" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98] bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md focus-visible:ring-blue-500 active:bg-blue-800 h-10 px-4 py-2 gap-2 w-full"
+              >
+                <Github className="mr-2 h-4 w-4" />
+                View on GitHub
+              </a>
               <p className="text-xs text-gray-500 mt-3">
                 Issues, feature requests, and pull requests are welcome!
               </p>
