@@ -12,14 +12,6 @@ cd product-data-explorer
 make start
 ```
 
-That's it! This single command:
-- Installs all dependencies (frontend & backend)
-- Sets up environment files
-- Starts PostgreSQL and Redis containers
-- Runs database migrations and seeds
-- Builds the backend
-- Launches both frontend and backend services
-
 ## Requirements
 
 - **Node.js** 18+
