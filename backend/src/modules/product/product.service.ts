@@ -219,6 +219,12 @@ export class ProductService {
       queryBuilder.orderBy('product.price', sortOrder);
     } else if (sortBy === 'rating') {
       queryBuilder.orderBy('detail.ratingsAvg', sortOrder);
+    } else if (sortBy === 'completeness') {
+      // Sort by completeness - products with details first
+      queryBuilder
+        .addSelect('CASE WHEN detail.id IS NOT NULL THEN 1 ELSE 0 END', 'has_detail')
+        .orderBy('has_detail', 'DESC')
+        .addOrderBy('product.id', 'DESC');
     } else if (sortBy === 'id') {
       queryBuilder.orderBy('product.id', sortOrder);
     } else if (sortBy === 'title') {

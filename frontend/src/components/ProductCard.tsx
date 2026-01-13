@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import Button from '@/components/ui/Button';
 import ProductImage from '@/components/ui/ProductImage';
 import SimpleImageTest from '@/components/debug/SimpleImageTest';
-import { Product, ProductDetail } from '@/lib/types';
+import { Product, ProductDetail, ProductDetailInfo } from '@/lib/types';
 import { formatPrice, truncateText } from '@/lib/utils';
 import { BookOpen, ExternalLink, Star, Heart, Plus } from 'lucide-react';
 import { useWishlist } from '@/contexts/WishlistContext';
@@ -19,8 +19,8 @@ export default function ProductCard({
   const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   
-  const productData = product as any;
-  const detail = productData.detail || {};
+  // Access the detail information correctly with proper typing
+  const detail = product.detail as ProductDetailInfo | undefined;
   
   const inWishlist = isInWishlist(product.id);
 
@@ -66,7 +66,7 @@ export default function ProductCard({
             src={product.imageUrl}
             alt={product.title}
             title={product.title}
-            isbn={detail.isbn}
+            isbn={detail?.isbn}
             sourceId={product.sourceId}
             className="object-cover"
             fallbackClassName="w-full h-full flex items-center justify-center bg-gray-100"
@@ -117,7 +117,7 @@ export default function ProductCard({
               <SimpleImageTest 
                 src={product.imageUrl} 
                 title={product.title}
-                isbn={detail.isbn}
+                isbn={detail?.isbn}
               />
             </>
           )}
@@ -151,14 +151,14 @@ export default function ProductCard({
             </div>
           )}
           
-          {detail.ratingsAvg && (
+          {detail?.ratingsAvg && (
             <div className="flex items-center mb-2">
               <div className="flex items-center">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={`star-${product.id}-${i}`}
                     className={`h-4 w-4 ${
-                      i < Math.floor(parseFloat(detail.ratingsAvg)) 
+                      i < Math.floor(parseFloat(detail.ratingsAvg!.toString())) 
                         ? 'text-yellow-400 fill-current' 
                         : 'text-gray-300'
                     }`}
@@ -166,8 +166,39 @@ export default function ProductCard({
                 ))}
               </div>
               <span className="ml-2 text-sm text-gray-600">
-                {parseFloat(detail.ratingsAvg).toFixed(1)} ({detail.reviewsCount || 0})
+                {parseFloat(detail.ratingsAvg.toString()).toFixed(1)} ({detail.reviewsCount || 0})
               </span>
+            </div>
+          )}
+          
+          {/* Display additional details when available */}
+          {detail?.publisher && (
+            <div className="text-xs text-gray-600 mb-1">
+              Publisher: {detail.publisher}
+            </div>
+          )}
+          
+          {detail?.isbn && (
+            <div className="text-xs text-gray-600 mb-1">
+              ISBN: {detail.isbn}
+            </div>
+          )}
+          
+          {detail?.genres && detail.genres.length > 0 && (
+            <div className="flex flex-wrap gap-1 mb-2">
+              {detail.genres.slice(0, 2).map((genre: string, index: number) => (
+                <span
+                  key={`genre-${product.id}-${index}`}
+                  className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded"
+                >
+                  {genre}
+                </span>
+              ))}
+              {detail.genres.length > 2 && (
+                <span className="text-xs text-gray-500">
+                  +{detail.genres.length - 2} more
+                </span>
+              )}
             </div>
           )}
           

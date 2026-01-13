@@ -99,7 +99,7 @@ export class WorldOfBooksApiService {
   private readonly algoliaBaseUrl = 'https://ar33g9njgj-dsn.algolia.net/1/indexes/*/queries';
   private readonly algoliaAppId = 'AR33G9NJGJ';
   private readonly algoliaApiKey = '96c16938971ef89ae1d14e21494e2114';
-  private readonly indexName = 'shopify_products_us';
+  private readonly indexName = 'shopify_products';
   private readonly baseUrl: string;
   private readonly userAgent: string;
 

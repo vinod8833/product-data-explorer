@@ -22,6 +22,22 @@ export interface Category {
   children?: Category[];
 }
 
+export interface ProductDetailInfo {
+  id: number;
+  productId: number;
+  description?: string;
+  specs?: Record<string, any>;
+  ratingsAvg?: number | string;
+  reviewsCount?: number;
+  publisher?: string;
+  publicationDate?: string;
+  isbn?: string;
+  pageCount?: number;
+  genres?: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Product {
   id: number;
   sourceId: string;
@@ -37,19 +53,13 @@ export interface Product {
   createdAt: string;
   updatedAt: string;
   category?: Category;
+  detail?: ProductDetailInfo;
+  reviews?: Review[];
 }
 
 export interface ProductDetail extends Product {
-  description?: string;
-  specs?: Record<string, any>;
-  ratingsAvg?: number | string;
-  reviewsCount?: number;
-  publisher?: string;
-  publicationDate?: string;
-  isbn?: string;
-  pageCount?: number;
-  genres?: string[];
-  reviews?: Review[];
+  // This interface is for backward compatibility
+  // The actual detail info is now in the detail property
 }
 
 export interface Review {

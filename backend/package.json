@@ -30,8 +30,13 @@
     "seed": "ts-node -r tsconfig-paths/register src/database/seed.ts",
     "seed:large": "ts-node -r tsconfig-paths/register src/scripts/seed-large-dataset.ts",
     "seed:massive": "ts-node -r tsconfig-paths/register src/scripts/seed-massive-dataset.ts",
+    "collect:books": "ts-node -r tsconfig-paths/register src/scripts/collect-book-dataset.ts",
+    "scrape:enhanced": "ts-node -r tsconfig-paths/register src/scripts/enhanced-book-scraper.ts",
+    "scrape:comprehensive": "ts-node -r tsconfig-paths/register src/scripts/comprehensive-book-scraper.ts",
+    "test:book-collection": "ts-node -r tsconfig-paths/register src/scripts/test-book-collection.ts",
     "test:scraping": "ts-node -r tsconfig-paths/register src/scripts/test-scraping.ts",
     "demo:scraping": "ts-node -r tsconfig-paths/register src/scripts/demo-scraping.ts",
+    "check:database": "ts-node -r tsconfig-paths/register src/scripts/check-database.ts",
     "check:setup": "ts-node -r tsconfig-paths/register src/scripts/check-setup.ts"
   },
   "dependencies": {

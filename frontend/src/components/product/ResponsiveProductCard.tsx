@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import ProductImage from '@/components/ui/ProductImage';
-import { Product, ProductDetail } from '@/lib/types';
+import { Product, ProductDetail, ProductDetailInfo } from '@/lib/types';
 import { formatPrice, generateId } from '@/lib/utils';
 import { useViewHistory } from '@/hooks/useViewHistory';
 import { Heart, ExternalLink } from 'lucide-react';
@@ -29,7 +29,7 @@ export default function ResponsiveProductCard({
   const [isWishlisted, setIsWishlisted] = useState(false);
   const { addToHistory } = useViewHistory();
 
-  const productData = product as any;
+  const detail = product.detail as ProductDetailInfo | undefined;
   const titleId = generateId('product-title');
 
   const handleCardClick = () => {
@@ -42,7 +42,7 @@ export default function ResponsiveProductCard({
         author: product.author,
         price: typeof product.price === 'string' ? parseFloat(product.price) : product.price,
         imageUrl: product.imageUrl,
-        category: productData.category?.title,
+        category: product.category?.title,
       },
     });
   };

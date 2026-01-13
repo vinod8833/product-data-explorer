@@ -15,7 +15,7 @@ function ProductsContent() {
   
   const [filters, setFilters] = useState<SearchFilters>({
     q: searchParams.get('q') || '',
-    sortBy: 'id',
+    sortBy: 'completeness',
     sortOrder: 'DESC',
   });
 
@@ -57,7 +57,7 @@ function ProductsContent() {
       author: author || '',
       minPrice: minPrice ? parseFloat(minPrice) : undefined,
       maxPrice: maxPrice ? parseFloat(maxPrice) : undefined,
-      sortBy: sortBy || 'id',
+      sortBy: sortBy || 'completeness',
       sortOrder: (sortOrder as 'ASC' | 'DESC') || 'DESC',
       inStock: inStock ? inStock === 'true' : undefined,
     };

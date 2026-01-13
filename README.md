@@ -1,59 +1,120 @@
 # BookData Hub
 
-BookData Hub is a full-stack book data exploration platform built with **Next.js**, **NestJS**, and **TypeScript**. It supports background scraping, caching, and a fully documented API, with a strong focus on production parity and developer experience.
+A full-stack book data exploration platform built with **Next.js**, **NestJS**, and **TypeScript**. Features background scraping, caching, and a fully documented API with production-ready architecture.
 
+## One-Command Setup
 
-## Quick Start
-
-Run the entire project locally with a single command:
+Get the entire project running locally in minutes:
 
 ```bash
-git clone git@github.com:vinod8833/product-data-explorer.git
-cd bookdata-hub
-make setup && make dev
+git clone https://github.com/vinod8833/product-data-explorer.git
+cd product-data-explorer
+make start
 ```
 
-This command installs dependencies, starts PostgreSQL and Redis, runs migrations and seeds, builds the backend, and launches both frontend and backend services.
-
----
-
-## Local URLs
-
-* Frontend: [http://localhost:3000](http://localhost:3000)
-* Backend API: [http://localhost:3001/api](http://localhost:3001/api)
-* Swagger API Docs: [http://localhost:3001/api/docs](http://localhost:3001/api/docs)
-* Health Check: [http://localhost:3001/health](http://localhost:3001/health)
-
----
+That's it! This single command:
+- Installs all dependencies (frontend & backend)
+- Sets up environment files
+- Starts PostgreSQL and Redis containers
+- Runs database migrations and seeds
+- Builds the backend
+- Launches both frontend and backend services
 
 ## Requirements
 
-* Node.js 18+
-* Docker & Docker Compose
-* Git
-* Make
+- **Node.js** 18+
+- **Docker** & **Docker Compose**
+- **Git**
+- **Make**
 
----
+## Local URLs
 
-## Make Commands
+Once running, access these services:
+
+- **Frontend**: [http://localhost:3000](http://localhost:3000)
+- **Backend API**: [http://localhost:3001/api](http://localhost:3001/api)
+- **API Documentation**: [http://localhost:3001/api/docs](http://localhost:3001/api/docs)
+- **Health Check**: [http://localhost:3001/health](http://localhost:3001/health)
+
+## Project Output / Screenshots
+
+### Homepage - Book Discovery
+![Homepage](./images/Screenshot%20from%202026-01-14%2001-13-03.png)
+*Clean, responsive homepage showcasing featured books with search and navigation*
+
+### Product Catalog
+![Product Catalog](./images/Screenshot%20from%202026-01-14%2001-13-17.png)
+*Browse books with filtering, sorting, and pagination capabilities*
+
+### Book Details Page
+![Book Details](./images/Screenshot%20from%202026-01-14%2001-13-38.png)
+*Detailed book information with ratings, descriptions, and purchase options*
+
+### Search Results
+![Search Results](./images/Screenshot%20from%202026-01-14%2001-14-01.png)
+*Real-time search functionality with relevant book suggestions*
+
+### Category Navigation
+![Categories](./images/Screenshot%20from%202026-01-14%2001-14-32.png)
+*Organized book categories for easy browsing and discovery*
+
+### API Documentation
+![API Docs](./images/Screenshot%20from%202026-01-14%2001-14-45.png)
+*Interactive Swagger documentation for all API endpoints*
+
+### Mobile Responsive Design
+![Mobile View](./images/Screenshot%20from%202026-01-14%2001-14-54.png)
+*Fully responsive design optimized for mobile devices*
+
+### Admin Dashboard
+![Admin Dashboard](./images/Screenshot%20from%202026-01-14%2001-15-07.png)
+*Backend management interface for content and data administration*
+
+## ⚡ Key Features
+
+- **Background Scraping**: Queue-based workers for data collection
+- **Database & Caching**: PostgreSQL with Redis for optimal performance
+- **Type-Safe API**: Fully typed NestJS backend with Swagger documentation
+- **Responsive Frontend**: Modern Next.js interface with accessibility features
+- **One-Command Setup**: Complete local development environment via Makefile
+- **Production Ready**: Containerized architecture with deployment configs
+
+## Development Commands
+
+### Essential Commands
+```bash
+make start        # Complete setup and start (recommended)
+make dev          # Start development after initial setup
+make stop         # Stop all services
+make clean        # Clean up containers and dependencies
+```
+
+### Useful Commands
+```bash
+make status       # Check service status
+make health       # Run health checks
+make urls         # Show all service URLs
+make logs         # View all service logs
+make db-reset     # Reset database with fresh data
+```
+
+<details>
+<summary>View all available commands</summary>
 
 ### Setup and Run
-
 ```bash
 make setup        # Install dependencies, create env files, start DB/Redis
 make dev          # Start frontend and backend in development mode
-make start        # Alias for: make setup && make dev
+make start        # Complete setup and start (recommended)
 ```
 
 ### Stop and Clean
-
 ```bash
 make stop         # Stop all running services
 make clean        # Remove containers, volumes, and node_modules
 ```
 
 ### Status and Health
-
 ```bash
 make status       # Show status of all services
 make health       # Run health checks
@@ -61,7 +122,6 @@ make urls         # Print all local service URLs
 ```
 
 ### Docker Services
-
 ```bash
 make services     # Start PostgreSQL and Redis only
 make logs         # Show all Docker logs
@@ -70,7 +130,6 @@ make logs-redis   # Redis logs
 ```
 
 ### Database
-
 ```bash
 make migrate      # Run database migrations
 make seed         # Seed initial data
@@ -79,59 +138,37 @@ make db-shell     # Open PostgreSQL shell
 ```
 
 ### Tests and Code Quality
-
 ```bash
-make test         
-make test-backend   # Run backend tests
-make test-frontend  # Run frontend tests
-make lint           # Lint all code
-make format         # Format all code
+make test         # Run all tests
+make test-backend # Run backend tests
+make test-frontend # Run frontend tests
+make lint         # Lint all code
+make format       # Format all code
 ```
 
 ### Individual Services
-
 ```bash
-make dev-backend  
-make dev-frontend 
+make dev-backend  # Start backend only
+make dev-frontend # Start frontend only
 ```
 
 ### Help
-
 ```bash
-make help         
+make help         # Show all available commands
 ```
 
----
-
-## Key Features
-
-* Background scraping with queue-based workers
-* PostgreSQL and Redis caching
-* Fully typed API with Swagger documentation
-* Responsive, accessible frontend
-* One-command local setup via Makefile
-* Production-ready architecture
-
----
+</details>
 
 ## API Documentation
 
-Swagger UI is available locally at:
-
-[http://localhost:3001/api/docs](http://localhost:3001/api/docs)
-
----
+Interactive Swagger documentation is available at: [http://localhost:3001/api/docs](http://localhost:3001/api/docs)
 
 ## Deployment
 
-* Frontend: Vercel
-* Backend: Railway or Docker-based platforms
+- **Frontend**: Vercel (automatic deployments)
+- **Backend**: Railway or Docker-compatible platforms
+- **Database**: PostgreSQL with Redis caching
 
----
-
-### Backend (Railway)
-The backend can be deployed to various platforms with the included configuration files.
-
-## License
+##  License
 
 MIT License - see [LICENSE](LICENSE) file for details.
